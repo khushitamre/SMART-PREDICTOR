@@ -82,7 +82,7 @@ st.markdown(modern_laser_css, unsafe_allow_html=True)
 # --- 3. CORE RESOURCE LOADING ---
 @st.cache_resource
 def load_resources():
-    model = joblib.load("logistic.pkl")
+    model = joblib.load("Logistic.pkl")
     df = pd.read_csv("customer_churn_prediction_dataset.csv")
     return model, df
 
