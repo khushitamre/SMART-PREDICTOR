@@ -1,9 +1,20 @@
+import subprocess
+import sys
+
+# --- AUTOMATIC FORCE INSTALLER (Requirements bypass trick) ---
+try:
+    import plotly
+    import sklearn
+except ModuleNotFoundError:
+    # Agar packages nahi mile toh code unhe khud install karega
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "plotly", "scikit-learn"])
+
 import streamlit as st
 import pandas as pd
 import joblib
 import plotly.graph_objects as go
 
-# --- 1. SET PAGE CONFIG (MODERN COMPACT LAYOUT) ---
+# --- 1. SET PAGE CONFIG ---
 st.set_page_config(page_title="Predictive AI Dashboard", page_icon="📈", layout="wide")
 
 # --- 2. THE MODERN CORPORATE LASER THEME (CUSTOM CSS) ---
@@ -117,7 +128,6 @@ with col2:
                 elif feature_lower == 'monthlycharges': input_dict[feature] = float(salary / 12)
                 elif feature_lower == 'totalcharges': input_dict[feature] = float((salary / 12) * tenure)
                 else:
-                    # FIX: Agar column data text (string) hai, toh use skip karke 0 karenge taaki crash na ho
                     if feature in df.columns:
                         try:
                             val = float(df[feature].median())
@@ -165,7 +175,3 @@ with col2:
             st.error(f"Analysis Interrupted: {e}")
             
     st.markdown('</div>', unsafe_allow_html=True)
-
-
-
-
